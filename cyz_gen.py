@@ -4,12 +4,16 @@ import subprocess
 import time
 import sys
 import platform
+import requests  # Assure-toi d'avoir installé la bibliothèque via `pip install requests`
 from colorama import init, Fore, Style
 
-# Initialisation de Colorama (avec autoreset)
+# Initialisation de Colorama
 init(autoreset=True)
 
-# Dictionnaires de messages pour chaque langue (anglais par défaut)
+# Définir la version actuelle de l'application
+VERSION = "1.0"
+
+# Dictionnaires des messages pour chaque langue (anglais par défaut)
 MESSAGES = {
     'en': {
         'banner': f"""
@@ -21,6 +25,7 @@ MESSAGES = {
   ██║     ╚██████╔╝███████╗╚██████╔╝    ╚██████╔╝███████╗██║ ╚████║
   ╚═╝      ╚═════╝ ╚══════╝ ╚═════╝      ╚═════╝ ╚══════╝╚═╝  ╚═══╝
           🐍 CYZ GEN — Python Reverse Shell Generator 🐍
+Current Version: {VERSION}
 """,
         'choose_language': "Choose language / Choisissez la langue:\n1) Français\n2) English (default)\n👉 Option (1/2): ",
         'menu': "\nMain Menu",
@@ -33,9 +38,10 @@ MESSAGES = {
             "6) Show tutorial",
             "7) Show system info",
             "8) About CYZ GEN",
-            "9) Exit"
+            "9) Exit",
+            "10) Check version / Update"
         ],
-        'prompt_option': "\n👉 Choose an option (1-9): ",
+        'prompt_option': "\n👉 Choose an option (1-10): ",
         'prompt_payload_choice': "\n🎯 Choose your payload:\n1) windows/meterpreter/reverse_tcp\n2) windows/meterpreter/reverse_http\n3) windows/meterpreter/reverse_https\n👉 Option (1/2/3): ",
         'invalid_choice': "❌ Invalid choice. Try again.",
         'prompt_lhost': "\n🔹 LHOST (Kali IP): ",
@@ -58,7 +64,7 @@ MESSAGES = {
              CYZ GEN Credits
 -------------------------------------------
 Developed by      : CYZ (Your Name)
-Version           : 1.0
+Version           : {VERSION}
 Inspired by       : Metasploit & Kali Linux
 -------------------------------------------
 Thank you for using CYZ GEN!
@@ -110,6 +116,7 @@ Processor  : {platform.processor()}
 Python     : {platform.python_version()}
 -------------------------------------------
 """,
+        'version_info': "\nCurrent version: " + VERSION + "\n",
         'exit_msg': "\n👋 Exiting CYZ GEN. Goodbye!",
         'press_enter': "\nPress Enter to return to the menu...",
         'interrupt': "\n👋 Interrupt detected. Exiting CYZ GEN."
@@ -124,6 +131,7 @@ Python     : {platform.python_version()}
   ██║     ╚██████╔╝███████╗╚██████╔╝    ╚██████╔╝███████╗██║ ╚████║
   ╚═╝      ╚═════╝ ╚══════╝ ╚═════╝      ╚═════╝ ╚══════╝╚═╝  ╚═══╝
          🐍 CYZ GEN — Générateur de Reverse Shell en Python 🐍
+Version actuelle : {VERSION}
 """,
         'choose_language': "Choisissez la langue / Choose language:\n1) Français\n2) English (défaut)\n👉 Option (1/2): ",
         'menu': "\nMenu Principal",
@@ -136,9 +144,10 @@ Python     : {platform.python_version()}
             "6) Afficher le tutoriel",
             "7) Afficher les infos système",
             "8) À propos de CYZ GEN",
-            "9) Quitter"
+            "9) Quitter",
+            "10) Vérifier la version / Mise à jour"
         ],
-        'prompt_option': "\n👉 Choisissez une option (1-9) : ",
+        'prompt_option': "\n👉 Choisissez une option (1-10) : ",
         'prompt_payload_choice': "\n🎯 Choisissez votre payload :\n1) windows/meterpreter/reverse_tcp\n2) windows/meterpreter/reverse_http\n3) windows/meterpreter/reverse_https\n👉 Option (1/2/3) : ",
         'invalid_choice': "❌ Choix invalide. Réessayez.",
         'prompt_lhost': "\n🔹 LHOST (IP de Kali) : ",
@@ -161,7 +170,7 @@ Python     : {platform.python_version()}
              Crédits - CYZ GEN
 -------------------------------------------
 Développé par      : CYZ (Votre Nom)
-Version            : 1.0
+Version            : {VERSION}
 Inspiré par        : Metasploit & Kali Linux
 -------------------------------------------
 Merci d'utiliser CYZ GEN !
@@ -214,6 +223,7 @@ Processeur: {platform.processor()}
 Python     : {platform.python_version()}
 -------------------------------------------
 """,
+        'version_info': "\nVersion actuelle : " + VERSION + "\n",
         'exit_msg': "\n👋 Fermeture de CYZ GEN. À bientôt !",
         'press_enter': "\nAppuyez sur Entrée pour revenir au menu...",
         'interrupt': "\n👋 Interruption détectée. Fermeture de CYZ GEN."
@@ -256,6 +266,27 @@ def show_about():
 def show_system_info():
     clear()
     print(MESSAGES[LANG]['system_info'])
+    input(MESSAGES[LANG]['press_enter'])
+
+def check_for_update():
+    clear()
+    print(Fore.YELLOW + (MESSAGES[LANG]['version_info']))
+    print(Fore.YELLOW + "Checking for updates...")
+    try:
+        # L'URL doit pointer vers un fichier contenant la version, par exemple VERSION sur GitHub
+        url = "https://raw.githubusercontent.com/lolo34dr/CYZ-GEN/main/VERSION"
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            remote_version = response.text.strip()
+            if remote_version != VERSION:
+                print(Fore.GREEN + f"Update available: {remote_version} (current: {VERSION})")
+                print("Please visit https://github.com/lolo34dr/CYZ-GEN to download the latest version.")
+            else:
+                print(Fore.GREEN + "You are using the latest version.")
+        else:
+            print(Fore.RED + "Error retrieving remote version.")
+    except Exception as e:
+        print(Fore.RED + f"Failed to check for updates: {e}")
     input(MESSAGES[LANG]['press_enter'])
 
 def choose_payload():
@@ -366,6 +397,8 @@ def main_menu():
         elif choice == "9":
             print(Fore.RED + MESSAGES[LANG]['exit_msg'])
             sys.exit(0)
+        elif choice == "10":
+            check_for_update()
         else:
             print(Fore.RED + MESSAGES[LANG]['invalid_choice'])
             time.sleep(1)
