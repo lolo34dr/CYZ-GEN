@@ -11,7 +11,7 @@ from colorama import init, Fore, Style
 init(autoreset=True)
 
 # Définir la version actuelle de l'application
-VERSION = "1.0"
+VERSION = "1.25.12.04"
 
 # Dictionnaires des messages pour chaque langue (anglais par défaut)
 MESSAGES = {
