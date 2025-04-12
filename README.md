@@ -45,7 +45,7 @@ pip install colorama
 ```bash
 Clone the repository:
 
-git clone https://github.com/YourUsername/CYZ-GEN.git
+git clone https://github.com/lolo34dr/CYZ-GEN.git
 cd CYZ-GEN
 ```
 ## 📚 Usage
