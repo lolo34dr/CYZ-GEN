@@ -36,20 +36,20 @@ sudo apt install metasploit-framework
 python3 -m venv venv
 source venv/bin/activate
 pip install colorama
-
-📦 Installation
-
+```
+## 📦 Installation
+```bash
 Clone the repository:
 
 git clone https://github.com/YourUsername/CYZ-GEN.git
 cd CYZ-GEN
-
-📚 Usage
+```
+## 📚 Usage
 
 Run the application:
-
+```bash
 sudo python3 cyz_gen.py
-
+```
 Follow the prompts to:
 
     Choose your language (English / Français)
@@ -64,13 +64,13 @@ Follow the prompts to:
 
     Display the built-in tutorial
 
-📄 License
+## 📄 License
 
 This project is licensed under the MIT License (with a custom credit requirement). See the LICENSE file for details.
 🙌 Credits
 
 Created by CYZ
 Special thanks to the Metasploit team and the Kali Linux community.
-⚠️ Disclaimer
+## ⚠️ Disclaimer
 
 This tool is intended for educational purposes only. Use it only on systems and networks for which you have explicit authorization.
