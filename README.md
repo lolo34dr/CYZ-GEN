@@ -22,6 +22,10 @@
 
 ---
 
+## 📸 Preview
+
+![Main Page](https://github.com/lolo34dr/CYZ-GEN/blob/main/images/MainPage.png)
+
 ## ⚙️ Requirements
 
 - **Python 3.9+**
