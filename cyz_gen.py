@@ -4,13 +4,11 @@ import subprocess
 import time
 import sys
 import platform
-import requests  # Assure-toi d'avoir installé la bibliothèque via `pip install requests`
+import requests
 from colorama import init, Fore, Style
 
-# Initialisation de Colorama
 init(autoreset=True)
 
-# Définir la version actuelle de l'application
 VERSION = "1.25.12.04"
 
 # Dictionnaires des messages pour chaque langue (anglais par défaut)
